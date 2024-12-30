@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Journey</title>
+    <style>
+        /* General Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Romantic Background */
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+            background-size: 600% 600%;
+            animation: gradientAnimation 15s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Hearts Animation */
+        .hearts {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 182, 193, 0.8);
+            transform: rotate(-45deg);
+            animation: floatHearts 10s infinite;
+        }
+
+        .heart::before, .heart::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: inherit;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 10px;
+            top: 0;
+        }
+
+        @keyframes floatHearts {
+            0% {
+                transform: translateY(100vh) scale(0.5) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(-100vh) scale(1.5) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Teddy Bears and Balloons */
+        .bears, .balloons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .bear, .balloon {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            animation: floatObjects 15s infinite;
+        }
+
+        .bear {
+            background: url('teddy_bear.png') no-repeat center;
+            background-size: contain;
+        }
+
+        .balloon {
+            background: url('balloon.png') no-repeat center;
+            background-size: contain;
+        }
+
+        @keyframes floatObjects {
+            0% {
+                transform: translateX(0) translateY(100vh);
+                opacity: 1;
+            }
+            50% {
+                transform: translateX(50%) translateY(30vh);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateX(100%) translateY(-100vh);
+                opacity: 0;
+            }
+        }
+
+        /* Destination Points */
+        .destination {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: 2px solid white;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 14px;
+            transition: transform 0.3s ease;
+        }
+
+        .destination:hover {
+            transform: scale(1.2);
+        }
+
+        /* Example Positioning for Destinations */
+        #destination1 { bottom: 400px; left: 10%; }
+        #destination2 { bottom: 300px; left: 50%; }
+        #destination3 { bottom: 200px; left: 80%; }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .modal-content {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .modal img, .modal video {
+            width: 100%;
+            border-radius: 15px;
+        }
+
+        .modal button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff9a9e;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+        }
+
+        .modal button:hover {
+            background-color: #ff6f91;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background -->
+    <div class="background"></div>
+    <div class="hearts"></div>
+    
+    <!-- Floating Bears -->
+    <div class="bears">
+        <div class="bear" style="left: 10%; animation-delay: 2s;"></div>
+        <div class="bear" style="left: 40%; animation-delay: 4s;"></div>
+        <div class="bear" style="left: 70%; animation-delay: 6s;"></div>
+    </div>
+    
+    <!-- Floating Balloons -->
+    <div class="balloons">
+        <div class="balloon" style="left: 20%; animation-delay: 1s;"></div>
+        <div class="balloon" style="left: 50%; animation-delay: 3s;"></div>
+        <div class="balloon" style="left: 80%; animation-delay: 5s;"></div>
+    </div>
+
+    <!-- Scene -->
+    <div class="scene">
+        <!-- Destination Points -->
+        <div id="destination1" class="destination" onclick="showDestination(1)">First Date</div>
+        <div id="destination2" class="destination" onclick="showDestination(2)">Our Vacation</div>
+        <div id="destination3" class="destination" onclick="showDestination(3)">Special Moment</div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content" id="modalContent"></div>
+        <button onclick="closeModal()">Close</button>
+    </div>
+
+    <script>
+        // Data for Each Destination
+        const destinations = {
+            1: { type: 'image', content: 'first_date.jpg', message: 'This was our magical first date!' },
+            2: { type: 'video', content: 'vacation.mp4', message: 'Our unforgettable vacation!' },
+            3: { type: 'image', content: 'special_moment.jpg', message: 'This special moment was amazing!' }
+        };
+
+        // Show Modal
+        function showDestination(id) {
+            const modal = document.getElementById('modal');
+            const modalContent = document.getElementById('modalContent');
+            const destination = destinations[id];
+
+            if (destination.type === 'image') {
+                modalContent.innerHTML = `<img src="${destination.content}" alt="Image"><p>${destination.message}</p>`;
+            } else {
+                modalContent.innerHTML = `<video controls autoplay><source src="${destination.content}" type="video/mp4"></video><p>${destination.message}</p>`;
+            }
+
+            modal.style.display = 'flex';
+        }
+
+        // Close Modal
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        // Add Floating Hearts
+        const heartsContainer = document.querySelector('.hearts');
+        for (let i = 0; i < 20; i++) {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.style.left = `${Math.random() * 100}%`;
+            heart.style.animationDelay = `${Math.random() * 10}s`;
+            heartsContainer.appendChild(heart);
+        }
+    </script>
+</body>
+</html>
